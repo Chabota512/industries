@@ -1,0 +1,27 @@
+I’m checking the three selected companies against public sources first. I’ll create the tracker with verified details only; if a listing doesn’t clearly identify the application-receiving office, I’ll mark it “call to confirm” rather than treat a map result as settled.
+
+
+Searched 15 websites, read 5 web pages, and used 2 tools
+The public-source check found a Kitwe main office for K-Solutions, but its site gives conflicting suite and phone details, so I’ll flag those for a call before travel.
+ Northwold lists its Kitwe office as NORTHWOLD House, Plot 5395-G, Kamfinsa; Trescha lists Plot 5574 Mindolo Road, Kitwe.
+ The public pages don’t confirm HR walk-in acceptance, so all three will be marked Call before travel.
+
+I’m about to create a new Google Sheet with two tabs: a three-company tracker (public address, published contacts, Maps search link, source, and what to confirm) and a phone/visit guide with scripts, document checklist, and follow-up notes. This won’t change any existing spreadsheets.
+
+
+Used 1 tool
+The tracker sheet is created. The first three rows will use the official Kitwe listings, with the K-Solutions suite/phone conflict called out; the call-confirmation boxes will remain unchecked until HR confirms the actual drop-off point and hours. I’m adding the map links and phone/visit scripts now, then I’ll read the sheet back to verify it.
+
+
+Used 1 tool
+The tracker rows and phone/visit guide are in the new Sheet. I’m reading the tabs back now to confirm the three rows, Maps links, and unchecked confirmation fields were saved correctly.
+
+
+Fetched data from Pilot Tracker spreadsheet
+I created the Kitwe pilot tracker with Pilot Tracker and Phone & Visit Guide tabs. I read it back to verify the three company rows, Maps search links, and unchecked HR-confirmation boxes are there.
+
+The public listings point to Kitwe offices for all three. Northwold lists NORTHWOLD House in Kamfinsa, and Trescha lists Plot 5574 Mindolo Road.
+ K-Solutions’ website has conflicting suite and phone details, which I flagged in the tracker.
+ These are public listings, not HR-confirmed drop-off instructions; call first to verify the exact entrance, whether HR accepts hand-delivered applications, and receiving hours.
+
+After you make the three calls, should I update the tracker with what you learn and plan the next group by area?

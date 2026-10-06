@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Attachment Visit Companion"
+description = "A mobile-first companion for finding the correct industrial attachment application office, preparing for the visit, opening directions, and tracking follow-ups."
+version = "1.0.0"
+id = "artifacts/attachment-visit-companion"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19797
+
+[services.development]
+run = "pnpm --filter @workspace/attachment-visit-companion run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/attachment-visit-companion", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/attachment-visit-companion/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19797"
+BASE_PATH = "/"
