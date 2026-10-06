@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: drive
+    description: Read-only Google Drive browsing for the app owner
 paths:
   /healthz:
     get:
@@ -24,6 +26,103 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /drive/access:
+    get:
+      operationId: getDriveAccess
+      tags: [drive]
+      summary: Check whether the signed-in user owns this app
+      responses:
+        "200":
+          description: App ownership status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DriveAccess"
+        "401":
+          description: Sign-in required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+  /drive/claim:
+    post:
+      operationId: claimDriveAccess
+      tags: [drive]
+      summary: Claim app ownership if it has not already been claimed
+      responses:
+        "200":
+          description: Ownership status after claim
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DriveAccess"
+        "401":
+          description: Sign-in required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "409":
+          description: Another signed-in user already claimed this app
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+  /drive/items:
+    get:
+      operationId: listDriveItems
+      tags: [drive]
+      summary: List folders and file metadata in one Google Drive folder
+      parameters:
+        - name: parentId
+          in: query
+          required: false
+          schema:
+            type: string
+            maxLength: 200
+        - name: pageToken
+          in: query
+          required: false
+          schema:
+            type: string
+            maxLength: 2048
+      responses:
+        "200":
+          description: One page of folder items; file contents are not returned
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DriveItemsResponse"
+        "401":
+          description: Sign-in required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "403":
+          description: The signed-in account does not own this app
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "400":
+          description: Invalid folder or page token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "404":
+          description: The selected folder could not be found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "502":
+          description: Google Drive request failed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +132,62 @@ components:
           type: string
       required:
         - status
+    ApiError:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+    DriveAccess:
+      type: object
+      properties:
+        claimed:
+          type: boolean
+        isOwner:
+          type: boolean
+      required:
+        - claimed
+        - isOwner
+    DriveItem:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        mimeType:
+          type: string
+        isFolder:
+          type: boolean
+        modifiedTime:
+          type: ["string", "null"]
+        webViewLink:
+          type: ["string", "null"]
+          format: uri
+      required:
+        - id
+        - name
+        - mimeType
+        - isFolder
+        - modifiedTime
+        - webViewLink
+    DriveItemsResponse:
+      type: object
+      properties:
+        parentId:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/DriveItem"
+        nextPageToken:
+          type: ["string", "null"]
+        incompleteSearch:
+          type: boolean
+      required:
+        - parentId
+        - items
+        - nextPageToken
+        - incompleteSearch
 

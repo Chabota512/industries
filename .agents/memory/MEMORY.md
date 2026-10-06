@@ -1,0 +1,2 @@
+- [Walk-in visit verification](walk-in-visit-verification.md) — Treat Drive filenames as leads, not proof of an office, address, contact, or walk-in policy.
+- [Vite dependency prebundles](vite-dependency-prebundles.md) — A stale Vite optimizer cache can report old React versions after the installed packages are aligned.
