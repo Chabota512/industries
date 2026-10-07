@@ -1,0 +1,16 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "-uFiXNURjhEBtwff3PQoq"
+uri = "file://CONTINUATION_PLAN.txt"
+type = "text"
+title = "Attachment Visit Companion — Agent Handoff Plan"
+description = "A direct continuation plan with the current implementation, ordered priorities, constraints, and verification steps."
+logical_id = "0df07ef5-3dee-4572-ac50-24d883f60c3f"
+content_hash = "sha256:5f82b1caaf69375e8e646e72ab2c94eb048052fceb87e7a5504eae8135e98ffb"
+size = 5200
+mtime_ms = 1791397259882
+storage_uri = "gcs://replit-rams-assets-worf/rams/assets/repl:598268b7-ce9e-4c8b-bb85-25a3f7884132/0df07ef5-3dee-4572-ac50-24d883f60c3f/ac085eff-189d-422c-b477-2a794e85b4de"
+storage_version_token = "1791397265502894"
+content_type = "text/plain"

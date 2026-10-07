@@ -1,0 +1,63 @@
+ATTACHMENT VISIT COMPANION — CONTINUATION PLAN
+
+GOAL
+Continue the existing mobile-friendly web app. Use the owner's Google Drive letters as the source of company candidates, help prepare verified office visits, and add AI guidance only through a no-cost option or after the user approves any cost.
+
+DO NOT REBUILD OR RE-INVESTIGATE
+- Continue in the existing artifact: artifacts/attachment-visit-companion.
+- Use the existing API service: artifacts/api-server.
+- Google Drive is already connected. Do not reinstall or replace the connector.
+- Do not do a repository-wide audit. Read only the files needed for the current step:
+  - artifacts/attachment-visit-companion/src/components/DriveSourcePanel.tsx
+  - artifacts/attachment-visit-companion/src/App.tsx
+  - artifacts/api-server/src/routes/drive.ts
+  - lib/api-spec/openapi.yaml (only if changing the API)
+- Do not create a second app or switch artifacts.
+
+CURRENT IMPLEMENTATION — KEEP IT
+- Clerk sign-in and owner-only access are in place. The first account to claim the app becomes its sole owner. The intended owner must claim access before the app is shared or published.
+- The Drive panel can browse folders, preview supported files through the owner-only API, and upload new files into the currently open folder.
+- Uploads create new Drive files. Do not replace, move, or delete existing files.
+- PDF, image, text, and Google Docs/Sheets/Slides exports have in-app previews. Other formats may need to open or download through Google Drive.
+- A selected filename becomes an editable company-name candidate. The user confirms it before adding it; the town comes from the top-level folder.
+- There are no sample company names. Imported office and visit records currently persist in this browser, not in Drive.
+- Location can sort records with saved coordinates. The app does not automatically find or verify office addresses, contacts, or walk-in policies.
+- AI analysis of letters/resumes and tailored visit guidance are not implemented. Do not enable a paid AI provider or send personal files to an AI service without explicit user approval.
+
+PRIORITY 1 — FINISH THE DRIVE-TO-COMPANY FLOW
+1. Test the authenticated owner flow using the intended owner account: access check, town-folder browsing, file preview, and upload into a user-selected folder.
+2. For any upload test, use a user-selected file/folder and explain that it creates a new Drive file. Do not alter or delete existing files.
+3. Reduce manual browsing: discover town folders and their letter files, then build a de-duplicated candidate list from Drive file IDs and editable filenames. Keep name confirmation before creating an office record.
+4. Preserve source Drive file ID, filename, link, and town on every candidate so the user can reopen the original letter.
+5. Keep filenames and letter contents separate from verified office facts. A letter or filename does not prove an address, HR contact, reception hours, or walk-in policy.
+
+PRIORITY 2 — MAKE LOCATION AND ROUTING RELIABLE
+1. Let the user enter a town or use device location without assuming a default town.
+2. Research or collect exact company office addresses and coordinates from reliable sources; save the source and verification status.
+3. Show distance only when coordinates exist. Open Google Maps only for a confirmed exact address or coordinates.
+4. Do not invent offices, contacts, addresses, or walk-in guidance. Mark uncertain details clearly and do not recommend travel until the destination is confirmed.
+
+PRIORITY 3 — ADD PERSONAL VISIT PREPARATION
+1. Let the user provide or select a resume and maintain a concise profile for the visit.
+2. Add company-specific talking points, who to ask for, and a short introduction only after confirming a free AI route or obtaining explicit approval for any charges.
+3. Keep the user's documents private, request consent before sending them to an AI service, and cite the Drive letter or other source for factual claims.
+4. Keep a usable manual preparation flow if AI is unavailable or declined.
+
+VERIFICATION AND DELIVERY
+- Keep OpenAPI and generated clients aligned. After an API-spec edit run:
+  pnpm --filter @workspace/api-spec run codegen
+- Run the full check:
+  pnpm run typecheck
+- Restart the existing workflows after server-side changes:
+  artifacts/api-server: API Server
+  artifacts/attachment-visit-companion: web
+- Refresh workflow/browser logs and check the mobile layout at about 402 x 874.
+- Anonymous Drive API requests must remain rejected. Do not bypass Clerk or owner checks to test the signed-in UI.
+- Report what was actually tested. If the owner account could not be used, say the authenticated Drive flow remains unverified.
+
+DONE WHEN
+- Drive letters reliably produce editable, de-duplicated company candidates without hard-coded company names.
+- The owner can upload and reopen letters from the correct Drive town folder.
+- Office addresses and map routes are source-backed and visibly verified before travel.
+- Resume/company visit guidance works without unexpected AI charges, or remains clearly manual until the user approves an AI provider.
+- Typecheck, workflow startup, and the signed-in owner flow have been verified.
