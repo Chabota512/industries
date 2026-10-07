@@ -64,3 +64,49 @@ export const ListDriveItemsResponse = zod.object({
 })
 
 
+/**
+ * @summary Preview a file from Google Drive
+ */
+export const previewDriveFilePathFileIdMax = 200;
+
+
+
+export const PreviewDriveFileParams = zod.object({
+  "fileId": zod.coerce.string().max(previewDriveFilePathFileIdMax)
+})
+
+export const PreviewDriveFileResponse = zod.unknown()
+
+
+/**
+ * @summary Upload a new file into a Google Drive folder
+ */
+export const uploadDriveFileQueryParentIdMax = 200;
+
+
+
+export const UploadDriveFileQueryParams = zod.object({
+  "parentId": zod.coerce.string().max(uploadDriveFileQueryParentIdMax).optional()
+})
+
+export const uploadDriveFileHeaderXFileNameMax = 720;
+
+export const uploadDriveFileHeaderXFileMimeTypeMax = 120;
+
+
+
+export const UploadDriveFileHeader = zod.object({
+  "X-File-Name": zod.string().min(1).max(uploadDriveFileHeaderXFileNameMax),
+  "X-File-Mime-Type": zod.string().max(uploadDriveFileHeaderXFileMimeTypeMax).optional()
+})
+
+export const UploadDriveFileResponse = zod.object({
+  "id": zod.string(),
+  "name": zod.string(),
+  "mimeType": zod.string(),
+  "isFolder": zod.boolean(),
+  "modifiedTime": zod.string().nullable(),
+  "webViewLink": zod.string().url().nullable()
+})
+
+

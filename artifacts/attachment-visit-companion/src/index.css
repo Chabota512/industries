@@ -46,3 +46,28 @@ button,a { -webkit-tap-highlight-color:transparent; }
 @media(max-width:450px){.landing-nav{height:66px;padding:0 15px}.landing-nav .brand strong{font-size:14px}.landing-nav>div{gap:12px}.landing-nav .btn{padding:9px 10px;font-size:10px}.landing-nav .landing-signin{font-size:10px}.landing-content{width:calc(100% - 34px);padding:43px 0}.landing-copy>p{font-size:14px}.landing-actions{align-items:flex-start;flex-direction:column;gap:16px}.landing-trust{align-items:flex-start;line-height:1.5}.landing-footer{align-items:flex-start;flex-direction:column;justify-content:center;padding:12px 18px}.drive-toolbar{align-items:flex-start}.drive-item{grid-template-columns:minmax(120px,1fr) 67px;}.drive-kind{display:none}.drive-view{grid-column:1/-1}.drive-item-open strong,.drive-file-select strong{max-width:210px}}
 @keyframes skeleton-shift{50%{opacity:.45}}
 a.drive-view{display:none}
+.drive-item-actions{grid-column:4;display:flex;align-items:center;gap:10px;min-width:0}
+.drive-preview-button{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;background:transparent;color:#34715a;font:700 10px var(--app-font-sans);cursor:pointer;padding:5px 4px;white-space:nowrap}
+.drive-preview-button:hover{text-decoration:underline}
+a.drive-view{display:inline-flex!important;font-size:10px;white-space:nowrap}
+.drive-upload-area{display:flex;justify-content:space-between;align-items:center;gap:16px;margin:14px 0 8px;padding:14px;background:#f2f0e8;border:1px solid #e2dfd4;border-radius:10px}
+.drive-upload-area>div:first-child{display:grid;gap:4px}
+.drive-upload-area strong{font:700 12px var(--app-font-serif);color:#30483c}
+.drive-upload-area span{font-size:10px;color:#758177}
+.drive-upload-actions{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:8px}
+.drive-upload-count{white-space:nowrap}
+.drive-review-button{width:100%;justify-content:center;margin:6px 0}
+.drive-review-modal{width:min(620px,calc(100vw - 28px));max-height:90dvh;overflow:auto}
+.drive-review-list{display:grid;gap:9px;max-height:min(48vh,440px);overflow:auto;margin:13px 0}
+.drive-review-card{display:grid;gap:12px;padding:12px;background:#f2f0e8;border:1px solid #e2dfd4;border-radius:9px}
+.drive-review-file{display:flex;align-items:center;gap:9px;min-width:0;color:#466051}
+.drive-review-file>span{flex:1;min-width:0;overflow-wrap:anywhere;font-size:10px;color:#66766d}
+.drive-review-file>svg{flex-shrink:0}
+.drive-review-card .field{margin:0}
+.drive-preview-modal{width:min(1000px,calc(100vw - 28px));height:min(86dvh,850px);max-height:90dvh;display:flex;flex-direction:column}
+.drive-preview-modal header h2{max-width:min(760px,65vw);overflow-wrap:anywhere}
+.drive-preview-note{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 0;color:#6b7970;font-size:10px;line-height:1.55}
+.drive-preview-note a{color:#34715a;font-weight:700;white-space:nowrap}
+.drive-preview-frame{flex:1;width:100%;min-height:260px;border:1px solid #dedbd0;border-radius:7px;background:#fff}
+@media(max-width:760px){.drive-item-actions{grid-column:1/-1;padding-left:28px}.drive-upload-area{align-items:flex-start;flex-direction:column}.drive-upload-actions{justify-content:flex-start}.drive-preview-modal{height:88dvh}.drive-preview-modal header h2{max-width:70vw}}
+@media(max-width:450px){.drive-upload-actions{width:100%}.drive-upload-actions .btn{flex:1;justify-content:center}.drive-preview-note{align-items:flex-start;flex-direction:column}.drive-review-file{flex-wrap:wrap}.drive-review-file>span{flex-basis:calc(100% - 30px)}.drive-review-file .drive-preview-button{margin-left:24px}}

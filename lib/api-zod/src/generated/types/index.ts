@@ -8,7 +8,9 @@
 
 export * from './apiError';
 export * from './driveAccess';
+export * from './driveFileContent';
 export * from './driveItem';
 export * from './driveItemsResponse';
 export * from './healthStatus';
 export * from './listDriveItemsParams';
+export * from './uploadDriveFileParams';

@@ -11,7 +11,7 @@ tags:
   - name: health
     description: Health operations
   - name: drive
-    description: Read-only Google Drive browsing for the app owner
+    description: Owner-only Google Drive browsing, previews, and uploads
 paths:
   /healthz:
     get:
@@ -100,7 +100,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ApiError"
         "403":
-          description: The signed-in account does not own this app
+          description: The signed-in account is not the owner or Drive denied access
           content:
             application/json:
               schema:
@@ -119,6 +119,135 @@ paths:
                 $ref: "#/components/schemas/ApiError"
         "502":
           description: Google Drive request failed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+  /drive/files/{fileId}/content:
+    get:
+      operationId: previewDriveFile
+      tags: [drive]
+      summary: Preview a file from Google Drive
+      parameters:
+        - name: fileId
+          in: path
+          required: true
+          schema:
+            type: string
+            maxLength: 200
+      responses:
+        "200":
+          description: The file or an export suitable for previewing
+          content:
+            application/octet-stream:
+              schema:
+                $ref: "#/components/schemas/DriveFileContent"
+        "400":
+          description: Invalid file ID or a folder was selected
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "401":
+          description: Sign-in required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "403":
+          description: The signed-in account does not own this app
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "404":
+          description: The file could not be found or opened
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "415":
+          description: Google Drive cannot export this native file type
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "413":
+          description: The file is too large to preview in the app
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "502":
+          description: Google Drive request failed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+  /drive/upload:
+    post:
+      operationId: uploadDriveFile
+      tags: [drive]
+      summary: Upload a new file into a Google Drive folder
+      parameters:
+        - name: parentId
+          in: query
+          required: false
+          schema:
+            type: string
+            maxLength: 200
+        - name: X-File-Name
+          in: header
+          required: true
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 720
+        - name: X-File-Mime-Type
+          in: header
+          required: false
+          schema:
+            type: string
+            maxLength: 120
+      requestBody:
+        required: true
+        content:
+          application/octet-stream:
+            schema:
+              $ref: "#/components/schemas/DriveFileContent"
+      responses:
+        "201":
+          description: New Drive file created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DriveItem"
+        "400":
+          description: Invalid folder or upload metadata
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "401":
+          description: Sign-in required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "403":
+          description: The signed-in account is not the owner or Drive denied access
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "413":
+          description: The file exceeds the upload limit
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "502":
+          description: Google Drive upload failed
           content:
             application/json:
               schema:
@@ -190,4 +319,7 @@ components:
         - items
         - nextPageToken
         - incompleteSearch
+    DriveFileContent:
+      type: string
+      format: binary
 

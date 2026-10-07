@@ -37,6 +37,8 @@ export interface DriveItemsResponse {
   incompleteSearch: boolean;
 }
 
+export type DriveFileContent = Blob;
+
 export type ListDriveItemsParams = {
 /**
  * @maxLength 200
@@ -46,5 +48,12 @@ parentId?: string;
  * @maxLength 2048
  */
 pageToken?: string;
+};
+
+export type UploadDriveFileParams = {
+/**
+ * @maxLength 200
+ */
+parentId?: string;
 };
 
